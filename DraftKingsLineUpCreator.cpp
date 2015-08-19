@@ -36,29 +36,30 @@ string DKROSTER = "DKroster818";
 int CreateLUNUMBER= 10;
 //////////////////////////////////////////////////////////////////////
 
-////Mouse Coordinates - will assign values with the shift key when asked, dont configure
-int MLBDOT_X = 0;
-int MLBDOT_Y = 0;
-
-int GAMETIMEDOT_X = 0;
-int GAMETIMEDOT_Y = 0;
-int CONTINUE_X = 0;
-int CONTINUE_Y = 0;
-
-int SearchBOX_X = 0;
-int SearchBOX_Y = 0;
-
-int TopGuy_X = 0;
-int TopGuy_Y = 0;
-
-int CreateLU_X = 0;
-int CreateLU_Y = 0;
 
 
 
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	////Mouse Coordinates - will assign values with the shift key when asked, dont configure
+	int MLBDOT_X = 0;
+	int MLBDOT_Y = 0;
+
+	int GAMETIMEDOT_X = 0;
+	int GAMETIMEDOT_Y = 0;
+	int CONTINUE_X = 0;
+	int CONTINUE_Y = 0;
+
+	int SearchBOX_X = 0;
+	int SearchBOX_Y = 0;
+
+	int TopGuy_X = 0;
+	int TopGuy_Y = 0;
+
+	int CreateLU_X = 0;
+	int CreateLU_Y = 0;
+
 	vector<PlayerInfo> pickablePlayers = LineUpData(DKROSTER);
 	vector<LineUp> Player_Pool = LUimport(pickablePlayers);
 	vector<LineUp> NonDuplicate_Player_Pool;
