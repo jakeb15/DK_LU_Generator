@@ -35,7 +35,9 @@ string DKROSTER = "DKroster818";
 
 // this is the file that holds the players you have selected that are to be entered into the program. Names must match the DK supplied roster or it will not find the correct player
 // formated by P,P,P,C,C,1B,1B,2B,2B,3B,3B,SS,SS,OF,OF,OF,OF,OF,OF
-string playerPool_File = "C:\\progData\\DKGenerated";
+string playerPool_File = "C:\\progData\\Generate\\Player_Pool_DK_MLB";
+string GeneratedLINEUP_Data = "C:\\progData\\DKGenerated";
+string NonDuplicateEntry_FILE = "C:\\progData\\nonDupList";
 // Number of Line ups to create
 int CreateLUNUMBER= 10;
 //////////////////////////////////////////////////////////////////////
@@ -65,49 +67,23 @@ int CreateLUNUMBER= 10;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	
+	ofstream nonDup;
+
+	nonDup.open(NonDuplicateEntry_FILE,std::ofstream::out);
+	nonDup.close();
 
 	vector<PlayerInfo> pickablePlayers = LineUpData(DKROSTER);
 	vector<LineUp> Player_Pool = LUimport(pickablePlayers);
 	vector<LineUp> NonDuplicate_Player_Pool;
 
-	ofstream nonDup;
-	nonDup.open("C:\\progData\\nonDupList",std::ofstream::out | std::fstream::app);
+	
+	nonDup.open(NonDuplicateEntry_FILE,std::ofstream::out | std::fstream::app);
 
 	/*//test vector//
 	for(std::vector<PlayerInfo>::iterator LU = pickablePlayers.begin(); LU != pickablePlayers.end(); LU++){
 		cout <<  LU->getName() << " "<< LU->getSalary() << " " << LU->getPos() <<endl;
 	}
 	*/
-	cout << "Go to draftKings.com home page and hover mouse on create line up..." << endl;
-	getCoordinates(DKCreateLINEUPCOOR_X,DKCreateLINEUPCOOR_Y);
-	cout << "Checking Coordinates... " << DKCreateLINEUPCOOR_X << " " << DKCreateLINEUPCOOR_Y << " NOW Click on create LINE UP"<< endl << endl;
-	cout << "Lets find the MLB game Dot..." <<endl<<endl;
-	getCoordinates(MLBDOT_X,MLBDOT_Y);
-	cout << "checking..." << MLBDOT_X << " " << MLBDOT_Y << endl <<endl;
-	cout << "Lets find the Game Time Dot..." << endl;
-	getCoordinates(GAMETIMEDOT_X,GAMETIMEDOT_Y);
-	cout << "checking..." << GAMETIMEDOT_X << " " << GAMETIMEDOT_Y << endl << endl;
-	cout << "Lets find the create Line up button" << endl <<endl;
-	getCoordinates(CONTINUE_X,CONTINUE_Y);
-	cout << "checking..." << CONTINUE_X << " " << CONTINUE_X ;
-	cout << "Lets find the Search Box..." <<endl << endl;
-	getCoordinates(SearchBOX_X,SearchBOX_Y);
-	cout << "checking..." << SearchBOX_X << " " << SearchBOX_Y << endl <<endl;
-	cout << "Lets Find top Player.. " << endl <<endl;
-	getCoordinates(TopGuy_X,TopGuy_Y);
-	cout << "checking..." << TopGuy_X << " " << TopGuy_Y <<endl << endl;
-	cout << "Lets find submit line up button ... " << endl <<endl;
-	getCoordinates(CreateLU_X,CreateLU_Y);
-	cout << "checking..." << CreateLU_X << " " << CreateLU_Y <<endl << endl;
-	Sleep(2000);
-	cout << endl << endl << "all positions locked in...creating line ups." << endl <<endl;
-	cout << "QUICKLY go back to the DraftKings.com Home page" << endl;
-	
-	Sleep(6000);
-	cout << "Open Draftkings.com" << endl;
-	cout << "6 Seconds until program begins." << endl;
-	Sleep(6000);
 
 	cout << "Now Detecting Duplicates..." << endl;
 	NonDuplicate_Player_Pool = KillDuplicates(Player_Pool);
@@ -127,7 +103,40 @@ int _tmain(int argc, _TCHAR* argv[])
 		nonDup << endl;
 	}
 
+	cout << "Details on all the lineups created has been saved to file "<< GeneratedLINEUP_Data << endl << endl;
+	cout << "Line ups to be entered into dk has been saved to file " << NonDuplicateEntry_FILE << endl << endl;
+	cout << "These Files Will be deleted on the next program execution" << endl;
+
+	cout << "Go to draftKings.com home page and hover mouse on create line up..." << endl;
+	getCoordinates(DKCreateLINEUPCOOR_X,DKCreateLINEUPCOOR_Y);
+	cout << "Checking Coordinates... " << DKCreateLINEUPCOOR_X << " " << DKCreateLINEUPCOOR_Y << " NOW Click on create LINE UP"<< endl << endl;
+	cout << "Lets find the MLB game Dot..." <<endl<<endl;
+	getCoordinates(MLBDOT_X,MLBDOT_Y);
+	cout << "checking..." << MLBDOT_X << " " << MLBDOT_Y << endl <<endl;
+	cout << "Lets find the Game Time Dot..." << endl;
+	getCoordinates(GAMETIMEDOT_X,GAMETIMEDOT_Y);
+	cout << "checking..." << GAMETIMEDOT_X << " " << GAMETIMEDOT_Y << endl << endl;
+	cout << "Lets find the Continue button" << endl <<endl;
+	getCoordinates(CONTINUE_X,CONTINUE_Y);
+	cout << "checking..." << CONTINUE_X << " " << CONTINUE_X ;
+	cout << "Lets find the Search Box..." <<endl << endl;
+	getCoordinates(SearchBOX_X,SearchBOX_Y);
+	cout << "checking..." << SearchBOX_X << " " << SearchBOX_Y << endl <<endl;
+	cout << "Lets Find top Player..Hover Mouse cursor over the top player with the green Plus sign " << endl <<endl;
+	getCoordinates(TopGuy_X,TopGuy_Y);
+	cout << "checking..." << TopGuy_X << " " << TopGuy_Y <<endl << endl;
+	cout << "Lets find submit line up button ... " << endl <<endl;
+	getCoordinates(CreateLU_X,CreateLU_Y);
+	cout << "checking..." << CreateLU_X << " " << CreateLU_Y <<endl << endl;
+	Sleep(2000);
+	cout << endl << endl << "all positions locked in...creating line ups." << endl <<endl;
+	cout << "QUICKLY go back to the DraftKings.com Home page" << endl;
 	
+	Sleep(6000);
+	cout << "Open Draftkings.com" << endl;
+	cout << "6 Seconds until program begins." << endl;
+	Sleep(6000);
+
 	gotoCreateLineup();
 	Sleep(1500);
 	CreateLineUP();
@@ -171,8 +180,7 @@ void CreateLineUP(){
 vector<LineUp> LUimport(vector<PlayerInfo> x){ // parse lineup and places it into lineup vector
 	vector<LineUp> AllLUS;
 	vector<PlayerInfo> Pickable_Players = x;
-	string fileLoc = "C:\\progData\\Generate\\";
-	string LUFile = fileLoc  + "DKgenerate0001";
+	string LUFile = playerPool_File;
 	ifstream myFile(LUFile);
 	string templine = "";
 	int pos = 0;
@@ -180,8 +188,10 @@ vector<LineUp> LUimport(vector<PlayerInfo> x){ // parse lineup and places it int
 
 	ofstream ReadyList;
 	ofstream DKGCLU;
-	DKGCLU.open(playerPool_File,std::ofstream::out); // 
-	ReadyList.open("C:\\progData\\ReadyList",std::ofstream::out | std::fstream::app);
+
+
+	DKGCLU.open(GeneratedLINEUP_Data,std::ofstream::out); // 
+	ReadyList.open("C:\\progData\\ReadyList",std::ofstream::out);
 
 
 	string firstBasemen[2];
@@ -280,9 +290,9 @@ vector<LineUp> LUimport(vector<PlayerInfo> x){ // parse lineup and places it int
 	cout <<  "outfield1"<<OutField[rand()%6]<< endl;
 	*/
 
-	cout << "pitcher1" <<Pitcher[0]<< endl;
-	cout << "pitcher2" <<Pitcher[1]<< endl;
-	cout << "Pitcher3" <<Pitcher[2]<< endl;
+	cout << "pitcher1 " <<Pitcher[0]<< endl;
+	cout << "pitcher2 " <<Pitcher[1]<< endl;
+	cout << "Pitcher3 " <<Pitcher[2]<< endl;
 	//cout << "Pitcher4" << Pitcher[3]<<endl;
 
 	cout << "OF1 " << OutField[0] << endl;
@@ -291,6 +301,8 @@ vector<LineUp> LUimport(vector<PlayerInfo> x){ // parse lineup and places it int
 	cout << "OF4 " << OutField[3] << endl;
 	cout << "OF5 " << OutField[4] << endl;
 	cout << "OF6 " << OutField[5] << endl;
+
+	cout << "creating line ups please wait..." << endl;
 	
 	bool goFlag = false;
 	for(int x = 0; x<1000;x++){
