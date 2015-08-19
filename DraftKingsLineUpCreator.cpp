@@ -32,19 +32,20 @@ void getCoordinates(int &x, int &y);
 
 //Holds the Draft Kings supplied roster for the players that are draftable
 string DKROSTER = "DKroster818";
+
+// this is the file that holds the players you have selected that are to be entered into the program. Names must match the DK supplied roster or it will not find the correct player
+// formated by P,P,P,C,C,1B,1B,2B,2B,3B,3B,SS,SS,OF,OF,OF,OF,OF,OF
+string playerPool_File = "C:\\progData\\DKGenerated";
 // Number of Line ups to create
 int CreateLUNUMBER= 10;
 //////////////////////////////////////////////////////////////////////
 
-
-
-
-
-int _tmain(int argc, _TCHAR* argv[])
-{
-	////Mouse Coordinates - will assign values with the shift key when asked, dont configure
+////Mouse Coordinates - will assign values with the shift key when asked, dont configure
 	int MLBDOT_X = 0;
 	int MLBDOT_Y = 0;
+
+	int DKCreateLINEUPCOOR_X = 0;
+	int DKCreateLINEUPCOOR_Y = 0;
 
 	int GAMETIMEDOT_X = 0;
 	int GAMETIMEDOT_Y = 0;
@@ -60,6 +61,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	int CreateLU_X = 0;
 	int CreateLU_Y = 0;
 
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	
+
 	vector<PlayerInfo> pickablePlayers = LineUpData(DKROSTER);
 	vector<LineUp> Player_Pool = LUimport(pickablePlayers);
 	vector<LineUp> NonDuplicate_Player_Pool;
@@ -72,7 +79,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		cout <<  LU->getName() << " "<< LU->getSalary() << " " << LU->getPos() <<endl;
 	}
 	*/
-
+	cout << "Go to draftKings.com home page and hover mouse on create line up..." << endl;
+	getCoordinates(DKCreateLINEUPCOOR_X,DKCreateLINEUPCOOR_Y);
+	cout << "Checking Coordinates... " << DKCreateLINEUPCOOR_X << " " << DKCreateLINEUPCOOR_Y << " NOW Click on create LINE UP"<< endl << endl;
 	cout << "Lets find the MLB game Dot..." <<endl<<endl;
 	getCoordinates(MLBDOT_X,MLBDOT_Y);
 	cout << "checking..." << MLBDOT_X << " " << MLBDOT_Y << endl <<endl;
@@ -138,7 +147,7 @@ void gotoLobby(){
 void gotoCreateLineup(){
 	Sleep(1000);
 	//SetCursorPos(531,504);
-	SetCursorPos(712,473);// new lobby
+	SetCursorPos(DKCreateLINEUPCOOR_X,DKCreateLINEUPCOOR_Y);// new lobby
 	Sleep(1000);
 	leftMouseClick();
 	Sleep(4500);
@@ -171,7 +180,7 @@ vector<LineUp> LUimport(vector<PlayerInfo> x){ // parse lineup and places it int
 
 	ofstream ReadyList;
 	ofstream DKGCLU;
-	DKGCLU.open("C:\\progData\\DKGenerated",std::ofstream::out);
+	DKGCLU.open(playerPool_File,std::ofstream::out); // 
 	ReadyList.open("C:\\progData\\ReadyList",std::ofstream::out | std::fstream::app);
 
 
